@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import { Destination } from "../types";
 
 interface DestinationCardProps {
@@ -17,8 +23,8 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
     switch (difficulty.toLowerCase()) {
       case "easy":
         return styles.easy;
-      case "moderate":
-        return styles.moderate;
+      case "medium":
+        return styles.medium;
       case "hard":
         return styles.hard;
       default:
@@ -26,13 +32,29 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
     }
   };
 
+  const getFavoriteStyle = () => {
+    if (Platform.OS === "ios") {
+      return {
+        icon: destination.favourite ? "♥︎" : "♡",
+        color: destination.favourite ? "#f65c87" : "white",
+      };
+    } else {
+      return {
+        icon: destination.favourite ? "★" : "☆",
+        color: destination.favourite ? "yellow" : "white",
+      };
+    }
+  };
+
+  const favoriteStyle = getFavoriteStyle();
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.card}>
       <View style={styles.header}>
         <Text style={styles.name}>{destination.name}</Text>
         <TouchableOpacity onPress={toggleFavorite}>
-          <Text style={styles.favorite}>
-            {destination.favourite ? "★" : "☆"}
+          <Text style={[styles.favorite, { color: favoriteStyle.color }]}>
+            {favoriteStyle.icon}
           </Text>
         </TouchableOpacity>
       </View>
@@ -90,8 +112,8 @@ const styles = StyleSheet.create({
   easy: {
     backgroundColor: "green",
   },
-  moderate: {
-    backgroundColor: "yellow",
+  medium: {
+    backgroundColor: "#d7a806",
   },
   hard: {
     backgroundColor: "purple",

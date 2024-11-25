@@ -11,25 +11,24 @@ import DestinationCard from "../components/DestinationCard";
 import { Destination } from "../types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
-import { API_URL } from "@env";
 
-const DestinationList: React.FC<NativeStackScreenProps<RootStackParamList, "DestinationList">> = ({ navigation }) => {
+const DestinationList: React.FC<
+  NativeStackScreenProps<RootStackParamList, "DestinationList">
+> = ({ navigation }) => {
   const [destinations, setDestinations] = useState<Destination[]>([]);
 
   const fetchDestinations = () => {
     fetch(`http://161.35.143.238:8000/vechezarreta`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`Failed to fetch destinations. Status: ${response.status}`);
+          throw new Error(
+            `Failed to fetch destinations. Status: ${response.status}`
+          );
         }
         return response.json();
       })
       .then((data) => {
-        const mappedData = data.map((destination: any) => ({
-          ...destination,
-          favourite: destination.favourite,
-        }));
-        setDestinations(mappedData);
+        setDestinations(data);
       })
       .catch((error) => console.error("Error fetching destinations:", error));
   };
@@ -42,29 +41,34 @@ const DestinationList: React.FC<NativeStackScreenProps<RootStackParamList, "Dest
     const destination = destinations.find((d) => d.id === id);
     if (destination) {
       fetch(`http://161.35.143.238:8000/vechezarreta/${id}`, {
-        method: "PATCH", 
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ favourite: !destination.favourite }),
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error(`Failed to update favorite status. Status: ${response.status}`);
+            throw new Error(
+              `Failed to update favorite status. Status: ${response.status}`
+            );
           }
           return fetchDestinations();
         })
-        .catch((error) => console.error("Error updating favorite status:", error));
+        .catch((error) =>
+          console.error("Error updating favorite status:", error)
+        );
     }
   };
+
+  const sortedDestinations = destinations.sort((a, b) => {
+    if (a.favourite && !b.favourite) return -1;
+    if (!a.favourite && b.favourite) return 1;
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={destinations.sort((a, b) => {
-          if (a.favourite === b.favourite) {
-            return a.name.localeCompare(b.name);
-          }
-          return a.favourite ? -1 : 1;
-        })}
+        data={sortedDestinations}
         renderItem={({ item }) => (
           <DestinationCard
             destination={item}
@@ -80,7 +84,7 @@ const DestinationList: React.FC<NativeStackScreenProps<RootStackParamList, "Dest
       />
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate("AddEditDestination", { destination: undefined })}
+        onPress={() => navigation.navigate("AddDestination")}
       >
         <Text style={styles.addButtonText}>Add Destination</Text>
       </TouchableOpacity>

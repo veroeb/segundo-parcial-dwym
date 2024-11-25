@@ -3,14 +3,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import DestinationList from "./src/screens/DestinationList";
 import DestinationDetails from "./src/screens/DestinationDetails";
-import AddEditDestination from "./src/screens/AddEditDestination";
+import AddDestination from "./src/screens/AddDestination";
 import { StatusBar } from "expo-status-bar";
 import { Destination } from "./src/types";
 
 export type RootStackParamList = {
   DestinationList: { refresh?: boolean };
   DestinationDetails: { destination: Destination };
-  AddEditDestination: { destination?: Destination };
+  AddDestination: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -31,9 +31,9 @@ const App: React.FC = () => {
           options={{ title: "Destination Details" }}
         />
         <Stack.Screen
-          name="AddEditDestination"
-          component={AddEditDestination}
-          options={{ title: "Add/Edit Destination" }}
+          name="AddDestination"
+          component={AddDestination}
+          options={{ title: "Add Destination" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
