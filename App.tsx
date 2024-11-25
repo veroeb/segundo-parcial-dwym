@@ -1,24 +1,16 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import SolarSystem from "./src/screens/SolarSystem";
-import PlanetDetails from "./src/screens/PlanetDetails";
-import AddPlanet from "./src/screens/AddPlanet";
+import DestinationList from "./src/screens/DestinationList";
+import DestinationDetails from "./src/screens/DestinationDetails";
+import AddDestination from "./src/screens/AddDestination";
 import { StatusBar } from "expo-status-bar";
-
-export interface Planet {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  moons: number;
-  moon_names: string[];
-}
+import { Destination } from "./src/types";
 
 export type RootStackParamList = {
-  SolarSystem: { refresh?: boolean };
-  PlanetDetails: { planet: Planet };
-  AddPlanet: undefined;
+  DestinationList: { refresh?: boolean };
+  DestinationDetails: { destination: Destination };
+  AddDestination: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -29,19 +21,19 @@ const App: React.FC = () => {
       <StatusBar style="auto" />
       <Stack.Navigator>
         <Stack.Screen
-          name="SolarSystem"
-          component={SolarSystem}
-          options={{ title: "Solar System" }}
+          name="DestinationList"
+          component={DestinationList}
+          options={{ title: "Destinations" }}
         />
         <Stack.Screen
-          name="PlanetDetails"
-          component={PlanetDetails}
-          options={{ title: "Planet Details" }}
+          name="DestinationDetails"
+          component={DestinationDetails}
+          options={{ title: "Destination Details" }}
         />
         <Stack.Screen
-          name="AddPlanet"
-          component={AddPlanet}
-          options={{ title: "Add Planet" }}
+          name="AddDestination"
+          component={AddDestination}
+          options={{ title: "Add Destination" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
