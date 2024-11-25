@@ -41,7 +41,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
     } else {
       return {
         icon: destination.favourite ? "★" : "☆",
-        color: destination.favourite ? "yellow" : "white",
+        color: destination.favourite ? "#f0c70d" : "white",
       };
     }
   };

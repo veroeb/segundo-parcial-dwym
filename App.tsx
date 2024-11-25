@@ -32,7 +32,7 @@ const DestinationStack: React.FC = () => (
     <Stack.Screen
       name="DestinationDetails"
       component={DestinationDetails}
-      options={{ title: "Destination Details" }}
+      options={{ title: "Destination details" }}
     />
   </Stack.Navigator>
 );
@@ -71,7 +71,7 @@ const App: React.FC = () => {
         <Tab.Screen
           name="Add"
           component={AddDestination}
-          options={{ title: "Add Destination" }}
+          options={{ title: "Add destination" }}
         />
       </Tab.Navigator>
     </NavigationContainer>
