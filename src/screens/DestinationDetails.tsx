@@ -117,7 +117,7 @@ const DestinationDetails: React.FC<DestinationDetailsProps> = ({
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-            <Text style={styles.buttonText}>Save Changes</Text>
+            <Text style={styles.buttonText}>Save changes</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setIsEditing(false)}

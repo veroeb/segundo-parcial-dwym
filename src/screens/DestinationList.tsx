@@ -11,11 +11,16 @@ import DestinationCard from "../components/DestinationCard";
 import { Destination } from "../types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
+import { useIsFocused } from "@react-navigation/native";
 
-const DestinationList: React.FC<
-  NativeStackScreenProps<RootStackParamList, "DestinationList">
-> = ({ navigation }) => {
+type DestinationListProps = NativeStackScreenProps<
+  RootStackParamList,
+  "DestinationList"
+>;
+
+const DestinationList: React.FC<DestinationListProps> = ({ navigation }) => {
   const [destinations, setDestinations] = useState<Destination[]>([]);
+  const isFocused = useIsFocused();
 
   const fetchDestinations = () => {
     fetch(`http://161.35.143.238:8000/vechezarreta`)
@@ -34,8 +39,10 @@ const DestinationList: React.FC<
   };
 
   useEffect(() => {
-    fetchDestinations();
-  }, []);
+    if (isFocused) {
+      fetchDestinations();
+    }
+  }, [isFocused]);
 
   const toggleFavorite = (id: string) => {
     const destination = destinations.find((d) => d.id === id);
@@ -82,12 +89,6 @@ const DestinationList: React.FC<
         )}
         keyExtractor={(item) => item.id}
       />
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => navigation.navigate("AddDestination")}
-      >
-        <Text style={styles.addButtonText}>Add Destination</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -96,18 +97,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-  },
-  addButton: {
-    padding: 15,
-    borderRadius: 10,
-    margin: 10,
-    backgroundColor: Platform.OS === "ios" ? "green" : "blue",
-    alignItems: "center",
-  },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
 

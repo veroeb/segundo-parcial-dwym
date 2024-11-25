@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   TextInput,
@@ -6,15 +6,12 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../App";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-type AddDestinationProps = NativeStackScreenProps<
-  RootStackParamList,
-  "AddDestination"
->;
+const AddDestination: React.FC = () => {
+  const navigation = useNavigation<any>();
 
-const AddDestination: React.FC<AddDestinationProps> = ({ navigation }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [difficulty, setDifficulty] = useState("");
@@ -34,12 +31,22 @@ const AddDestination: React.FC<AddDestinationProps> = ({ navigation }) => {
         favourite: false,
       }),
     })
-      .then(() => navigation.navigate("DestinationList", { refresh: true }))
+      .then(() => {
+        navigation.navigate("Home", { refresh: true });
+      })
       .catch((error) => console.error("Error:", error));
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      setName("");
+      setDescription("");
+      setDifficulty("");
+    }, [])
+  );
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TextInput
         placeholder="Name"
         placeholderTextColor="#929292"
@@ -86,7 +93,7 @@ const AddDestination: React.FC<AddDestinationProps> = ({ navigation }) => {
       <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
