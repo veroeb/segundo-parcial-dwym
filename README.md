@@ -6,3 +6,6 @@
 - Cuando se hace click en una card de un destino, se pueden ver sus detalles y ahora se pueden editar o eliminar
 - Agregada pantalla para agregar destinos
 - Agregados bottom tabs para navegar entre la home page (DestinationList) y la pantalla de agregar destinos (AddDestination)
+
+## Mejoras que se podrian haber implementado:
+- Un dropdown picker para las dificultades de los destinos
