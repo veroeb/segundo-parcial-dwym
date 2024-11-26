@@ -6,7 +6,7 @@
 - Cuando se hace click en una card de un destino, se pueden ver sus detalles y ahora se pueden editar o eliminar
 - Agregada pantalla para agregar destinos
 - Agregados bottom tabs para navegar entre la home page (DestinationList) y la pantalla de agregar destinos (AddDestination)
-- Hay diferencias en el boton de favoritos de las cards segun la plataforma
+- Hay diferencias en el boton de favoritos de las cards segun la plataforma (iOS y Android)
 
 ## Mejoras que se podrian haber implementado:
 - Un dropdown picker para las dificultades de los destinos
