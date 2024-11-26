@@ -9,3 +9,4 @@
 
 ## Mejoras que se podrian haber implementado:
 - Un dropdown picker para las dificultades de los destinos
+- Agregar la IP en el archivo .env para que se pueda llamar en todas las pantallas
